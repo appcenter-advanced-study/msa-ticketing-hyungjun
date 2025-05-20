@@ -1,0 +1,8 @@
+rootProject.name = 'msa-wnt'
+include 'modular-monoliths'
+include 'user-service'
+include 'api-gateway'
+include 'store-service'
+include 'nail-service'
+include 'coupon-service'
+

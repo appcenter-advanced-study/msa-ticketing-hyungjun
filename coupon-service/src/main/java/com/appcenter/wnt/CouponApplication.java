@@ -1,0 +1,15 @@
+package com.appcenter.wnt;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableFeignClients(basePackages = "com.appcenter.wnt.client")
+public class CouponApplication {
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(CouponApplication.class);
+        app.setAdditionalProfiles("coupon");
+        app.run(args);
+    }
+}

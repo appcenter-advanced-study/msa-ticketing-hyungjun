@@ -1,8 +1,9 @@
-package com.appcenter.wnt.controller;
+package com.appcenter.wnt.presentation;
 
-import com.appcenter.wnt.dto.request.CreateUserRequest;
-import com.appcenter.wnt.dto.response.UserResponse;
-import com.appcenter.wnt.service.UserService;
+import com.appcenter.wnt.application.dto.request.CreateUserRequest;
+import com.appcenter.wnt.application.dto.request.UpdateNicknameRequest;
+import com.appcenter.wnt.application.dto.response.UserResponse;
+import com.appcenter.wnt.application.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,11 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> getUser(@PathVariable("userId") Long userId) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(userId));
+    }
+
+    @PatchMapping("/{userId}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") Long userId, @RequestBody UpdateNicknameRequest updateNicknameRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userId, updateNicknameRequest));
     }
 
     @GetMapping("/internal/{userId}")

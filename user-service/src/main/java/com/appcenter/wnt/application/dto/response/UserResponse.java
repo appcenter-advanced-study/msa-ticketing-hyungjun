@@ -1,4 +1,4 @@
-package com.appcenter.wnt.dto.response;
+package com.appcenter.wnt.application.dto.response;
 
 import com.appcenter.wnt.domain.User;
 import lombok.Builder;

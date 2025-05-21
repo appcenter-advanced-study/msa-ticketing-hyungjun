@@ -1,4 +1,4 @@
-package com.appcenter.wnt.dto.response;
+package com.appcenter.wnt.application.dto.response;
 
 import com.appcenter.wnt.domain.Store;
 import lombok.Builder;
@@ -12,8 +12,8 @@ public record StoreResponse(
     public static StoreResponse from(Store store) {
         return StoreResponse.builder()
                 .id(store.getId())
-                .userId(store.getUserId())
-                .storeName(store.getName())
+                .userId(store.getOwner().getUserId())
+                .storeName(store.getStoreName().getStoreName())
                 .build();
     }
 }

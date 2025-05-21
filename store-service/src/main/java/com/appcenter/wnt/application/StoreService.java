@@ -1,10 +1,10 @@
-package com.appcenter.wnt.service;
+package com.appcenter.wnt.application;
 
-import com.appcenter.wnt.client.UserClient;
-import com.appcenter.wnt.client.UserResponse;
+import com.appcenter.wnt.infrastructure.UserServiceClient;
+import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
 import com.appcenter.wnt.domain.Store;
-import com.appcenter.wnt.dto.response.StoreResponse;
-import com.appcenter.wnt.repository.StoreRepository;
+import com.appcenter.wnt.application.dto.response.StoreResponse;
+import com.appcenter.wnt.domain.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +16,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StoreService {
     private final StoreRepository storeRepository;
-    private final UserClient userClient;
+    private final UserServiceClient userServiceClient;
 
     @Transactional
-    public StoreResponse createStore(Long userId, String name){
-        UserResponse user = userClient.getUserById(userId);
-        storeRepository.findByName(name).ifPresent(n ->{
+    public StoreResponse createStore(Long userId, String storeName){
+        UserResponse user = userServiceClient.getUserById(userId);
+        storeRepository.findByStoreName(storeName).ifPresent(n ->{
             throw new RuntimeException("이미 존재하는 가게입니다.");
         });
 
-        Store store = storeRepository.save(Store.of(user.id(), name));
+        Store store = storeRepository.save(Store.of(user.id(), storeName));
         return StoreResponse.from(store);
     }
 

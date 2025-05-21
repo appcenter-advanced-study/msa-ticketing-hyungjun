@@ -37,9 +37,4 @@ public class UserController {
     public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") Long userId, @RequestBody UpdateNicknameRequest updateNicknameRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userId, updateNicknameRequest));
     }
-
-    @GetMapping("/internal/{userId}")
-    public UserResponse getExternalUser(@PathVariable("userId") Long userId) {
-        return userService.getUser(userId);
-    }
 }

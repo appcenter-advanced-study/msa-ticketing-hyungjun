@@ -1,4 +1,4 @@
-package com.appcenter.wnt.dto.request;
+package com.appcenter.wnt.application.dto.request;
 
 public record CreateStoreRequest(
         Long userId,

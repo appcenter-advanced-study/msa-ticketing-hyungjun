@@ -1,8 +1,8 @@
-package com.appcenter.wnt.controller;
+package com.appcenter.wnt.presentation;
 
-import com.appcenter.wnt.dto.request.CreateStoreRequest;
-import com.appcenter.wnt.dto.response.StoreResponse;
-import com.appcenter.wnt.service.StoreService;
+import com.appcenter.wnt.application.dto.request.CreateStoreRequest;
+import com.appcenter.wnt.application.dto.response.StoreResponse;
+import com.appcenter.wnt.application.StoreService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,11 +46,4 @@ public class StoreController {
         storeService.deleteStore(storeId);
         return ResponseEntity.noContent().build();
     }
-
-    // 가게 조회(내부 조회)
-    @GetMapping("/internal/{storeId}")
-    public StoreResponse getInternalStore(@PathVariable("storeId") Long storeId) {
-        return storeService.findStore(storeId);
-    }
-
 }

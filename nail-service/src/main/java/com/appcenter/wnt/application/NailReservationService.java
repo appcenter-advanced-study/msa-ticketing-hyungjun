@@ -1,13 +1,13 @@
-package com.appcenter.wnt.service;
+package com.appcenter.wnt.application;
 
-import com.appcenter.wnt.client.StoreClient;
-import com.appcenter.wnt.client.StoreResponse;
-import com.appcenter.wnt.client.UserClient;
-import com.appcenter.wnt.client.UserResponse;
+import com.appcenter.wnt.infrastructure.StoreServiceClient;
+import com.appcenter.wnt.infrastructure.dto.response.StoreResponse;
+import com.appcenter.wnt.infrastructure.UserServiceClient;
+import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
 import com.appcenter.wnt.domain.NailReservation;
-import com.appcenter.wnt.dto.request.NailReservationRequest;
-import com.appcenter.wnt.dto.response.NailReservationResponse;
-import com.appcenter.wnt.repository.NailReservationRepository;
+import com.appcenter.wnt.application.dto.request.NailReservationRequest;
+import com.appcenter.wnt.application.dto.response.NailReservationResponse;
+import com.appcenter.wnt.domain.NailReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 public class NailReservationService {
 
     private final NailReservationRepository reservationRepository;
-    private final StoreClient storeClient;
-    private final UserClient userClient;
+    private final StoreServiceClient storeClient;
+    private final UserServiceClient userClient;
 
     @Transactional
     public NailReservationResponse reserve(NailReservationRequest request) {

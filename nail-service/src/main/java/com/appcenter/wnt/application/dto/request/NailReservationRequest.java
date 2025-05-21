@@ -1,4 +1,4 @@
-package com.appcenter.wnt.dto.request;
+package com.appcenter.wnt.application.dto.request;
 
 import com.appcenter.wnt.domain.enums.NailCategory;
 import com.appcenter.wnt.domain.enums.NailReservationTime;

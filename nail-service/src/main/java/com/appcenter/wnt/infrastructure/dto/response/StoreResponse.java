@@ -1,4 +1,4 @@
-package com.appcenter.wnt.client;
+package com.appcenter.wnt.infrastructure.dto.response;
 
 public record StoreResponse(
         Long id,

@@ -1,8 +1,8 @@
-package com.appcenter.wnt.controller;
+package com.appcenter.wnt.presentation;
 
-import com.appcenter.wnt.dto.request.NailReservationRequest;
-import com.appcenter.wnt.dto.response.NailReservationResponse;
-import com.appcenter.wnt.service.NailReservationService;
+import com.appcenter.wnt.application.dto.request.NailReservationRequest;
+import com.appcenter.wnt.application.dto.response.NailReservationResponse;
+import com.appcenter.wnt.application.NailReservationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,5 +35,4 @@ public class NailController {
         List<NailReservationResponse> response = nailReservationService.getReservations(userId);
         return ResponseEntity.ok(response);
     }
-
 }

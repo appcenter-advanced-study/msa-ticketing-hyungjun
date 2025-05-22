@@ -1,4 +1,4 @@
-package com.appcenter.wnt.dto.response;
+package com.appcenter.wnt.application.dto.response;
 
 import lombok.Builder;
 

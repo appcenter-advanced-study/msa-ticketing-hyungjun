@@ -1,8 +1,8 @@
-package com.appcenter.wnt.controller;
+package com.appcenter.wnt.presentation;
 
-import com.appcenter.wnt.dto.response.CouponReservationDetailResponse;
-import com.appcenter.wnt.dto.response.CouponReservationResponse;
-import com.appcenter.wnt.service.CouponReservationService;
+import com.appcenter.wnt.application.dto.response.CouponReservationDetailResponse;
+import com.appcenter.wnt.application.dto.response.CouponReservationResponse;
+import com.appcenter.wnt.application.CouponReservationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

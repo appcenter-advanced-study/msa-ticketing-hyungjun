@@ -24,17 +24,18 @@ public class CouponStock {
     @Version
     private Long version;
 
-    @Column(name = "coupon_Id")
-    private Long couponId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
 
     @Builder
-    private CouponStock(Long quantity, Long couponId){
+    private CouponStock(Long quantity, Coupon coupon){
         this.quantity = quantity;
-        this.couponId = couponId;
+        this.coupon = coupon;
     }
 
-    public static CouponStock of(Long quantity, Long couponId){
-        return CouponStock.builder().quantity(quantity).couponId(couponId).build();
+    public static CouponStock of(Long quantity, Coupon coupon){
+        return CouponStock.builder().quantity(quantity).coupon(coupon).build();
     }
 
     public void decreaseQuantity(){

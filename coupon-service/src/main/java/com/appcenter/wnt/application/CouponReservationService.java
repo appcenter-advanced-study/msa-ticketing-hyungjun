@@ -1,16 +1,16 @@
-package com.appcenter.wnt.service;
+package com.appcenter.wnt.application;
 
-import com.appcenter.wnt.client.UserClient;
-import com.appcenter.wnt.client.UserResponse;
+import com.appcenter.wnt.infrastructure.UserServiceClient;
+import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
 import com.appcenter.wnt.domain.Coupon;
 import com.appcenter.wnt.domain.CouponReservation;
 import com.appcenter.wnt.domain.CouponStock;
 import com.appcenter.wnt.domain.CouponType;
-import com.appcenter.wnt.dto.response.CouponReservationDetailResponse;
-import com.appcenter.wnt.dto.response.CouponReservationResponse;
-import com.appcenter.wnt.repository.CouponRepository;
-import com.appcenter.wnt.repository.CouponReservationRepository;
-import com.appcenter.wnt.repository.CouponStockRepository;
+import com.appcenter.wnt.application.dto.response.CouponReservationDetailResponse;
+import com.appcenter.wnt.application.dto.response.CouponReservationResponse;
+import com.appcenter.wnt.domain.CouponRepository;
+import com.appcenter.wnt.domain.CouponReservationRepository;
+import com.appcenter.wnt.domain.CouponStockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ public class CouponReservationService {
     private final CouponStockRepository couponStockRepository;
     private final CouponRepository couponRepository;
     private final CouponReservationRepository reservationRepository;
-    private final UserClient userClient;
+    private final UserServiceClient userClient;
 
     @Transactional
     public CouponReservationDetailResponse reserve(Long userId, Long couponId) {
@@ -34,7 +34,7 @@ public class CouponReservationService {
             throw new RuntimeException("이미 존재하는 쿠폰입니다.");
         });
         couponStock.decreaseQuantity();
-        CouponReservation couponReservation = reservationRepository.save(CouponReservation.of(user.id(), coupon.getId(),coupon.getType()));
+        CouponReservation couponReservation = reservationRepository.save(CouponReservation.of(user.id(), coupon));
 
         return CouponReservationDetailResponse.of(coupon.getId(),user.id(), couponReservation.getId(), coupon.getType().name(),coupon.getType().getDescription(), couponStock.getQuantity());
     }
@@ -56,7 +56,7 @@ public class CouponReservationService {
         List<CouponReservation> couponReservations  = reservationRepository.findByUserId(user.id());
 
         return couponReservations.stream().map(couponReservation -> {
-            CouponType couponType = couponReservation.getCouponType();
+            CouponType couponType = couponReservation.getCoupon().getType();
             return CouponReservationResponse.of(
                     user.id(),
                     couponReservation.getId(),

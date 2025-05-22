@@ -1,9 +1,9 @@
-package com.appcenter.wnt.controller;
+package com.appcenter.wnt.presentation;
 
-import com.appcenter.wnt.dto.request.CreateCouponRequest;
-import com.appcenter.wnt.dto.response.CouponDetailResponse;
-import com.appcenter.wnt.dto.response.CouponResponse;
-import com.appcenter.wnt.service.CouponService;
+import com.appcenter.wnt.application.dto.request.CreateCouponRequest;
+import com.appcenter.wnt.application.dto.response.CouponDetailResponse;
+import com.appcenter.wnt.application.dto.response.CouponResponse;
+import com.appcenter.wnt.application.CouponService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

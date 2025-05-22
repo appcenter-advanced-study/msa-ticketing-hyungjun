@@ -17,19 +17,21 @@ public class Store {
     @Column(name = "store_id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(nullable = false)
+    @Embedded
+    private Owner owner;
 
-    @Column(name = "store_name")
-    private String name;
+    @Column(nullable = false, unique = true)
+    @Embedded
+    private StoreName storeName;
 
     @Builder
-    private Store(Long userId, String name){
-        this.userId = userId;
-        this.name = name;
+    private Store(Long userId, String storeName) {
+        this.owner = new Owner(userId);
+        this.storeName = new StoreName(storeName);
     }
 
-    public static Store of(Long userId, String name){
-        return Store.builder().userId(userId).name(name).build();
+    public static Store of(Long userId, String storeName){
+        return Store.builder().userId(userId).storeName(storeName).build();
     }
 }

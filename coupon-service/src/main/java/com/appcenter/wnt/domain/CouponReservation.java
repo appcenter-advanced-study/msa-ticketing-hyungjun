@@ -16,24 +16,21 @@ public class CouponReservation {
     @Column(name = "coupon_reservation_id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(nullable = false)
+    @Embedded
+    private CouponOwner couponOwner;
 
-    @Column(name = "coupon_id")
-    private Long couponId;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "coupon_type")
-    private CouponType couponType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
 
     @Builder
-    private CouponReservation(Long userId, Long couponId, CouponType couponType) {
-        this.userId = userId;
-        this.couponId = couponId;
-        this.couponType = couponType;
+    private CouponReservation(Long userId, Coupon coupon) {
+        this.couponOwner = new CouponOwner(userId);
+        this.coupon = coupon;
     }
 
-    public static CouponReservation of(Long userId, Long couponId, CouponType couponType) {
-        return CouponReservation.builder().userId(userId).couponId(couponId).couponType(couponType).build();
+    public static CouponReservation of(Long userId, Coupon coupon) {
+        return CouponReservation.builder().userId(userId).coupon(coupon).build();
     }
 }

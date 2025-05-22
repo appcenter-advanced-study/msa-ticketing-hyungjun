@@ -25,4 +25,8 @@ public class User {
     public static User of(String nickname) {
         return User.builder().nickname(nickname).build();
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = new Nickname(nickname);
+    }
 }

@@ -19,6 +19,7 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.2.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 
 
 }

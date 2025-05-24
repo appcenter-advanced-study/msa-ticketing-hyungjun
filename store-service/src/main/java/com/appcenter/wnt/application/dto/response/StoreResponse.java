@@ -1,6 +1,6 @@
 package com.appcenter.wnt.application.dto.response;
 
-import com.appcenter.wnt.domain.Store;
+import com.appcenter.wnt.domain.store.Store;
 import lombok.Builder;
 
 @Builder

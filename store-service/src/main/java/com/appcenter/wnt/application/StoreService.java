@@ -2,9 +2,9 @@ package com.appcenter.wnt.application;
 
 import com.appcenter.wnt.infrastructure.UserServiceClient;
 import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
-import com.appcenter.wnt.domain.Store;
+import com.appcenter.wnt.domain.store.Store;
 import com.appcenter.wnt.application.dto.response.StoreResponse;
-import com.appcenter.wnt.domain.StoreRepository;
+import com.appcenter.wnt.domain.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

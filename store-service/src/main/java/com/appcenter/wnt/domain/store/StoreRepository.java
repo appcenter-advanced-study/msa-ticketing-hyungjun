@@ -1,4 +1,4 @@
-package com.appcenter.wnt.domain;
+package com.appcenter.wnt.domain.store;
 
 import java.util.List;
 import java.util.Optional;

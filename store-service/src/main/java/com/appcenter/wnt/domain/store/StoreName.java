@@ -1,4 +1,4 @@
-package com.appcenter.wnt.domain;
+package com.appcenter.wnt.domain.store;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

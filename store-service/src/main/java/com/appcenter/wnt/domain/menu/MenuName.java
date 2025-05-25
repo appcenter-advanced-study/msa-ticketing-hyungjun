@@ -18,7 +18,7 @@ public class MenuName {
     @Column(name = "menu_name", nullable = false, length = MAX_LENGTH)
     private String menuName;
 
-    MenuName(String menuName){
+    public MenuName(String menuName){
         String trimmedStoreName = menuName.trim();
         validateRegex(trimmedStoreName);
         this.menuName = trimmedStoreName;

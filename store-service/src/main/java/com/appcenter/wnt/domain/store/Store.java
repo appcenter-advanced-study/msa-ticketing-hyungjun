@@ -1,11 +1,14 @@
 package com.appcenter.wnt.domain.store;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,6 +45,15 @@ public class Store {
     @Enumerated(EnumType.STRING)
     private StoreStatus status;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "store_thumbnail_images",
+            joinColumns = @JoinColumn(name = "store_id")
+    )
+    @Column(name = "thumbnail_image_ids")
+    @Size(max = 4)
+    private List<Long> thumbnailImageIds;
+
     @Builder
     private Store(Long userId, String storeName, Address address, Set<BusinessHour> businessHours, ContactInfo contactInfo) {
         this.owner = new Owner(userId);
@@ -50,9 +62,10 @@ public class Store {
         this.businessHours = businessHours;
         this.contactInfo = contactInfo;
         this.status = StoreStatus.SUSPENDED;
+        this.thumbnailImageIds = new ArrayList<>();
     }
 
-    public static Store of(Long userId, String storeName, Address address, Set<BusinessHour> businessHours) {
-        return Store.builder().userId(userId).storeName(storeName).address(address).businessHours(businessHours).build();
+    public static Store of(Long userId, String storeName, Address address, Set<BusinessHour> businessHours, ContactInfo contactInfo) {
+        return Store.builder().userId(userId).storeName(storeName).address(address).businessHours(businessHours).contactInfo(contactInfo).build();
     }
 }

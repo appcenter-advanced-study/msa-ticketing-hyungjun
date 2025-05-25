@@ -22,7 +22,7 @@ public class StoreController {
     // 가게 생성
     @PostMapping
     public ResponseEntity<StoreResponse> createStore(@RequestBody CreateStoreRequest request) {
-        StoreResponse response = storeService.createStore(request.userId(), request.name());
+        StoreResponse response = storeService.createStore(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

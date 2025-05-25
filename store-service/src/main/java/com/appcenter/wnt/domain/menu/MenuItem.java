@@ -41,17 +41,21 @@ public class MenuItem {
     @Column(name = "detail", nullable = false, length = 50)
     private Set<String> details;
 
+    @Embedded
+    private MenuImage menuImage;
+
     @Builder
-    private MenuItem(Store store, String menuName, int price, boolean representative, Set<String> details) {
+    private MenuItem(Store store, String menuName, int price, boolean representative, Set<String> details, MenuImage menuImage) {
         this.store = store;
         this.menuName = new MenuName(menuName);
         this.price = new Price(price);
         this.representative = representative;
         this.details = details != null ? new HashSet<>(details) : new HashSet<>();
+        this.menuImage = menuImage;
     }
 
-    public static MenuItem of(Store store, String menuName, int price, boolean representative, Set<String> details) {
-        return MenuItem.builder().store(store).menuName(menuName).price(price).representative(representative).details(details).build();
+    public static MenuItem of(Store store, String menuName, int price, boolean representative, Set<String> details, MenuImage menuImage) {
+        return MenuItem.builder().store(store).menuName(menuName).price(price).representative(representative).details(details).menuImage(menuImage).build();
     }
 }
 

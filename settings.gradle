@@ -4,4 +4,4 @@ include 'api-gateway'
 include 'store-service'
 include 'nail-service'
 include 'coupon-service'
-
+include 'common'

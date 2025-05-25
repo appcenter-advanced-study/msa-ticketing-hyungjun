@@ -15,7 +15,7 @@ public class Price {
     @Column(name = "price", nullable = false)
     private int price;
 
-    Price(int price){
+    public Price(int price){
         validate(price);
         this.price = price;
     }

@@ -6,7 +6,9 @@ import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
 import com.appcenter.wnt.domain.store.Store;
 import com.appcenter.wnt.application.dto.response.StoreResponse;
 import com.appcenter.wnt.domain.store.StoreRepository;
+import com.appcenter.wnt.storage.FilesStorageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,6 +1,5 @@
 package com.appcenter.wnt.domain.store;
 
-import com.appcenter.wnt.domain.menu.MenuItem;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -15,8 +14,8 @@ public class StoreImage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_item_id", nullable = false)
-    private MenuItem menu;
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
     @Column(name = "file_name", nullable = false)
     private String fileName;
@@ -25,13 +24,13 @@ public class StoreImage {
     private String filePath;
 
     @Builder
-    public StoreImage(MenuItem menu, String fileName, String filePath) {
-        this.menu = menu;
+    public StoreImage(Store store, String fileName, String filePath) {
+        this.store = store;
         this.fileName = fileName;
         this.filePath = filePath;
     }
 
-    public static StoreImage of(MenuItem menu, String fileName, String filePath) {
-        return StoreImage.builder().menu(menu).fileName(fileName).filePath(filePath).build();
+    public static StoreImage of(Store store, String fileName, String filePath) {
+        return StoreImage.builder().store(store).fileName(fileName).filePath(filePath).build();
     }
 }

@@ -2,9 +2,7 @@ package com.appcenter.wnt.presentation;
 
 import com.appcenter.wnt.application.MenuItemService;
 import com.appcenter.wnt.application.dto.request.CreateMenuRequest;
-import com.appcenter.wnt.application.dto.request.CreateStoreRequest;
 import com.appcenter.wnt.application.dto.response.MenuItemResponse;
-import com.appcenter.wnt.application.dto.response.StoreResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

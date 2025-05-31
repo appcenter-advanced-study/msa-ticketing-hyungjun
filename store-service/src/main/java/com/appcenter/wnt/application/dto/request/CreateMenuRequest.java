@@ -3,12 +3,9 @@ package com.appcenter.wnt.application.dto.request;
 import com.appcenter.wnt.domain.menu.MenuImage;
 import com.appcenter.wnt.domain.menu.MenuItem;
 import com.appcenter.wnt.domain.store.Store;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
-import java.util.Set;
+import java.util.HashSet;
+import java.util.List;
 
 public record CreateMenuRequest(
         Long storeId,
@@ -19,7 +16,7 @@ public record CreateMenuRequest(
 
         boolean representative,
 
-        Set<String> details,
+        List<String> details,
 
         MenuImageDto menuImage
 ) {
@@ -29,7 +26,7 @@ public record CreateMenuRequest(
                 menuName,
                 price,
                 representative,
-                details,
+                new HashSet<>(details),
                 menuImage.toEntity()
         );
     }

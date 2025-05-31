@@ -54,6 +54,12 @@ public class Store {
     @Size(max = 4)
     private List<Long> thumbnailImageIds;
 
+    @Column(name = "rating")
+    private double rating;
+
+    @Column(name = "review_count")
+    private long reviewCount;
+
     @Builder
     private Store(Long userId, String storeName, Address address, Set<BusinessHour> businessHours, ContactInfo contactInfo) {
         this.owner = new Owner(userId);
@@ -63,6 +69,8 @@ public class Store {
         this.contactInfo = contactInfo;
         this.status = StoreStatus.SUSPENDED;
         this.thumbnailImageIds = new ArrayList<>();
+        this.rating = 0.0;
+        this.reviewCount = 0;
     }
 
     public static Store of(Long userId, String storeName, Address address, Set<BusinessHour> businessHours, ContactInfo contactInfo) {

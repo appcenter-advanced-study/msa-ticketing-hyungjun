@@ -5,6 +5,7 @@ import com.appcenter.wnt.domain.store.BusinessHour;
 import com.appcenter.wnt.domain.store.ContactInfo;
 import com.appcenter.wnt.domain.store.Store;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -32,9 +33,11 @@ public record CreateStoreRequest(
             DayOfWeek dayOfWeek,
 
             @JsonFormat(pattern = "HH:mm")
+            @Schema(example = "09:00")
             LocalTime startTime,
 
             @JsonFormat(pattern = "HH:mm")
+            @Schema(example = "18:00")
             LocalTime endTime
     ) {
         public BusinessHour toEntity() {

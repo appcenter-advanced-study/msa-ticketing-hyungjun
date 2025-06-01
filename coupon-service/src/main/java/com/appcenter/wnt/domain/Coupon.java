@@ -16,16 +16,34 @@ public class Coupon {
     @Column(name = "coupon_id")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "coupon_type")
-    private CouponType type;
+    @Embedded
+    private CouponDateInfo couponDateInfo;
+
+    @Embedded
+    private CouponDiscountInfo couponDiscountInfo;
+
+    @Column(name = "coupon_name")
+    private String name;
+
+    @Column(name = "quantity")
+    private int quantity;
 
     @Builder
-    private Coupon(CouponType type){
-        this.type = type;
+    private Coupon(CouponDateInfo couponDateInfo,CouponDiscountInfo couponDiscountInfo, String name, int quantity) {
+        this.couponDateInfo = couponDateInfo;
+        this.couponDiscountInfo = couponDiscountInfo;
+        this.name = name;
+        this.quantity = quantity;
     }
 
-    public static Coupon of(CouponType type){
-        return Coupon.builder().type(type).build();
+    public static Coupon of(CouponDateInfo couponDateInfo, CouponDiscountInfo couponDiscountInfo, String name, int quantity) {
+        return Coupon.builder().couponDateInfo(couponDateInfo).couponDiscountInfo(couponDiscountInfo).name(name).quantity(quantity).build();
+    }
+
+    public void issue(){
+        if(this.quantity <= 0){
+            throw new RuntimeException("쿠폰을 발급할 수 없습니다.");
+        }
+        this.quantity--;
     }
 }

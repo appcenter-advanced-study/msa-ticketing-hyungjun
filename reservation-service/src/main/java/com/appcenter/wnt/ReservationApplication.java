@@ -6,10 +6,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class StoreApplication {
+public class ReservationApplication {
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(StoreApplication.class);
-        app.setAdditionalProfiles("stores");
+        SpringApplication app = new SpringApplication(ReservationApplication.class);
+        app.setAdditionalProfiles("reservation");
         app.run(args);
     }
 }

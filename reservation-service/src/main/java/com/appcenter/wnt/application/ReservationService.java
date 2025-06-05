@@ -2,22 +2,20 @@ package com.appcenter.wnt.application;
 
 import com.appcenter.wnt.application.dto.request.ReservationRequest;
 import com.appcenter.wnt.application.dto.response.ReservationResponse;
-import com.appcenter.wnt.domain.Reservation;
-import com.appcenter.wnt.domain.ReservationRepository;
+import com.appcenter.wnt.domain.*;
 import com.appcenter.wnt.infrastructure.StoreServiceClient;
 import com.appcenter.wnt.infrastructure.UserServiceClient;
-import com.appcenter.wnt.infrastructure.dto.response.StoreResponse;
+import com.appcenter.wnt.infrastructure.dto.response.ReservationInfoResponse;
 import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -26,28 +24,27 @@ public class ReservationService {
 
     @Transactional
     public ReservationResponse reserve(ReservationRequest request) {
+        // 요청한 사용자 정보
         UserResponse user = userClient.getUserById(request.userId());
-        StoreResponse store = storeClient.getStoreById(request.storeId());
+        log.info("userId : {}", user.id());
 
-        reservationRepository.findByStoreIdAndReservationDateAndReservationTime(store.id(), request.reservationDate(), request.reservationTime()).ifPresent(nr ->{
-            throw new RuntimeException("이미 예약이 존재합니다.");
-        });
+        // 서비스를 예약 할 가게 및 메뉴 정보(가게 운영시간 포함)
+        ReservationInfoResponse reservationInfo = storeClient.getReservationInfo(request.storeId(), request.menuId());
+        log.info("menuId : {}", reservationInfo.menuId());
+        log.info("storeId : {}", reservationInfo.storeId());
 
-        Reservation nailReservation = reservationRepository.save(Reservation.of(user.id(),user.nickname(),store.id(),store.storeName(),request.nailCategory(),request.reservationDate(),request.reservationTime()));
-        return ReservationResponse.from(nailReservation);
-    }
+        // 사용자가 요청한 예약 시간
+        ReservationTime reservationTime = new ReservationTime(request.reservationTime().dayOfWeek(), request.reservationTime().reservationMinutes());
 
-    @Transactional
-    public void cancel(Long nailReservationId) {
-        Reservation nailReservation = reservationRepository.findById(nailReservationId).orElseThrow(()-> new RuntimeException("예약이 존재하지 않습니다."));
-        reservationRepository.delete(nailReservation);
-    }
+        // 사용자 정보
+        UserInfo userInfo = new UserInfo(user.id(), user.nickname());
+        // 가게 정보
+        StoreInfo storeInfo = new StoreInfo(reservationInfo.storeId(), reservationInfo.storeName(),reservationInfo.fullAddress(),reservationInfo.latitude(),reservationInfo.longitude());
+        // 메뉴 정보
+        MenuInfo menuInfo = new MenuInfo(reservationInfo.menuId(),reservationInfo.price(), reservationInfo.menuName());
 
-    @Transactional(readOnly = true)
-    public List<ReservationResponse> getReservations(Long userId) {
-        UserResponse user = userClient.getUserById(userId);
-        List<Reservation> nailReservations = reservationRepository.findByUserId(user.id());
+        Reservation reservation = reservationRepository.save(Reservation.of(userInfo,menuInfo,storeInfo, reservationTime));
 
-        return nailReservations.stream().map(ReservationResponse::from).collect(Collectors.toList());
+        return ReservationResponse.from(reservation);
     }
 }

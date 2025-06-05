@@ -26,13 +26,11 @@ public class ReservationController {
 
     @DeleteMapping("/{reservationId}")
     public ResponseEntity<String> cancel(@PathVariable("reservationId") Long reservationId) {
-        reservationService.cancel(reservationId);
         return ResponseEntity.status(HttpStatus.OK).body("예매 취소 성공");
     }
 
     @GetMapping("/users/{userId}")
     public ResponseEntity<List<ReservationResponse>> getReservations(@PathVariable("userId") Long userId) {
-        List<ReservationResponse> response = reservationService.getReservations(userId);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(null);
     }
 }

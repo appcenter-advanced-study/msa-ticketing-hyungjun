@@ -38,10 +38,12 @@ public record CreateStoreRequest(
 
             @JsonFormat(pattern = "HH:mm")
             @Schema(example = "18:00")
-            LocalTime endTime
+            LocalTime endTime,
+
+            int slotIntervalMinutes
     ) {
         public BusinessHour toEntity() {
-            return BusinessHour.of(dayOfWeek, startTime, endTime);
+            return BusinessHour.of(dayOfWeek, startTime, endTime,slotIntervalMinutes);
         }
     }
 }

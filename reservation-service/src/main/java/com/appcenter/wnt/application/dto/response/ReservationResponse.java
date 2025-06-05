@@ -8,18 +8,14 @@ public record ReservationResponse(
         Long reservationId,
         Long storeId,
         Long userId,
-        String nailType,
-        String description,
-        long price
+        Long menuId
 ) {
     public static ReservationResponse from(Reservation reservation) {
         return ReservationResponse.builder()
                 .reservationId(reservation.getId())
-                .userId(reservation.getUserId())
-                .storeId(reservation.getStoreId())
-                .nailType(reservation.getNailCategory().name())
-                .description(reservation.getNailCategory().getDescription())
-                .price(reservation.getNailCategory().getPrice())
+                .storeId(reservation.getStoreInfo().getStoreId())
+                .userId(reservation.getUserInfo().getUserId())
+                .menuId(reservation.getMenuInfo().getMenuId())
                 .build();
     }
 }

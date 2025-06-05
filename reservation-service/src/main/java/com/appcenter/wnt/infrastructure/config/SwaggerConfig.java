@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "API Document", description = "NAIL SERVICE 명세서", version = "v3")
+        info = @Info(title = "API Document", description = "RSERVATION SERVICE 명세서", version = "v3")
 )
 public class SwaggerConfig {
 

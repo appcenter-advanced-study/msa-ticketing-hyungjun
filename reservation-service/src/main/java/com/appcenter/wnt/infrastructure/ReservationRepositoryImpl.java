@@ -2,11 +2,9 @@ package com.appcenter.wnt.infrastructure;
 
 import com.appcenter.wnt.domain.Reservation;
 import com.appcenter.wnt.domain.ReservationRepository;
-import com.appcenter.wnt.domain.enums.NailReservationTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,8 +14,8 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     private final ReservationJpaRepository jpaRepository;
 
     @Override
-    public Reservation save(Reservation nailReservation) {
-        return jpaRepository.save(nailReservation);
+    public Reservation save(Reservation reservation) {
+        return jpaRepository.save(reservation);
     }
 
     @Override
@@ -26,17 +24,12 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public void delete(Reservation nailReservation) {
-        jpaRepository.delete(nailReservation);
-    }
-
-    @Override
-    public Optional<Reservation> findByStoreIdAndReservationDateAndReservationTime(Long storeId, LocalDate date, NailReservationTime time) {
-        return jpaRepository.findByStoreIdAndReservationDateAndReservationTime(storeId, date, time);
+    public void delete(Reservation reservation) {
+        jpaRepository.delete(reservation);
     }
 
     @Override
     public List<Reservation> findByUserId(Long userId) {
-        return jpaRepository.findByUserId(userId);
+        return jpaRepository.findByUserInfo_UserId(userId);
     }
 }

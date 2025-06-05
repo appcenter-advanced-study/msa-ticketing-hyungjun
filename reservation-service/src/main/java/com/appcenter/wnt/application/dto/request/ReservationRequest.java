@@ -1,15 +1,24 @@
 package com.appcenter.wnt.application.dto.request;
 
-import com.appcenter.wnt.domain.enums.NailCategory;
-import com.appcenter.wnt.domain.enums.NailReservationTime;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDate;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 public record ReservationRequest(
         Long userId,
         Long storeId,
-        NailCategory nailCategory,
-        LocalDate reservationDate,
-        NailReservationTime reservationTime
+        Long menuId,
+        ReservationTime reservationTime
 ) {
+
+    public record ReservationTime(
+            DayOfWeek dayOfWeek,
+
+            @JsonFormat(pattern = "HH:mm")
+            @Schema(example = "09:00")
+            LocalTime reservationMinutes
+    ) {
+    }
 }

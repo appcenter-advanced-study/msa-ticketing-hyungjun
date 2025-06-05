@@ -23,13 +23,17 @@ public class BusinessHour {
     @Column(name = "end_time")
     private LocalTime endTime;
 
-    public BusinessHour(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime) {
+    @Column(name = "slot_interval_minutes",nullable = false)
+    private int slotIntervalMinutes;
+
+    public BusinessHour(DayOfWeek dayOfWeek, LocalTime startTime, LocalTime endTime, int slotIntervalMinutes) {
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.slotIntervalMinutes = slotIntervalMinutes;
     }
 
-    public static BusinessHour of(DayOfWeek dayOfWeek,LocalTime startTime, LocalTime endTime) {
-        return BusinessHour.builder().dayOfWeek(dayOfWeek).startTime(startTime).endTime(endTime).build();
+    public static BusinessHour of(DayOfWeek dayOfWeek,LocalTime startTime, LocalTime endTime, int slotIntervalMinutes) {
+        return BusinessHour.builder().dayOfWeek(dayOfWeek).startTime(startTime).endTime(endTime).slotIntervalMinutes(slotIntervalMinutes).build();
     }
 }

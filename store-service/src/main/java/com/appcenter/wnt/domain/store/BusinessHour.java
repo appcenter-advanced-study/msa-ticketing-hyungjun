@@ -15,7 +15,7 @@ import java.time.LocalTime;
 public class BusinessHour {
 
     @Enumerated(EnumType.STRING)
-    private DayOfWeek dayOfWeek;;
+    private DayOfWeek dayOfWeek;
 
     @Column(name = "start_time")
     private LocalTime startTime;

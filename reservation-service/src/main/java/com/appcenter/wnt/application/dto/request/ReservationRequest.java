@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public record ReservationRequest(
@@ -13,15 +14,22 @@ public record ReservationRequest(
         Long storeId,
         @Schema(example = "1")
         Long menuId,
-        ReservationTime reservationTime
+        ReservationTimeDto reservationTime,
+        ReservationDateDto reservationDate
 ) {
 
-    public record ReservationTime(
+    public record ReservationTimeDto(
             DayOfWeek dayOfWeek,
 
             @JsonFormat(pattern = "HH:mm")
             @Schema(example = "09:00")
-            LocalTime reservationMinutes
+            LocalTime reservationTime
     ) {
+    }
+
+    public record ReservationDateDto(
+            @Schema(example = "2025-06-12")
+            LocalDate reservationDate
+    ){
     }
 }

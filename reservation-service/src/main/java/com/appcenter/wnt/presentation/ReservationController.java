@@ -1,7 +1,9 @@
 package com.appcenter.wnt.presentation;
 
 import com.appcenter.wnt.application.ReservationService;
+import com.appcenter.wnt.application.dto.request.AvailableTimeRequest;
 import com.appcenter.wnt.application.dto.request.ReservationRequest;
+import com.appcenter.wnt.application.dto.response.AvailableTimeResponse;
 import com.appcenter.wnt.application.dto.response.ReservationResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -33,4 +35,10 @@ public class ReservationController {
     public ResponseEntity<List<ReservationResponse>> getReservations(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(null);
     }
+
+    @PostMapping("/available")
+    public ResponseEntity<AvailableTimeResponse> getAvailableTime(@RequestBody AvailableTimeRequest request) {
+        return ResponseEntity.ok(reservationService.getAvailableTimes(request));
+    }
+
 }

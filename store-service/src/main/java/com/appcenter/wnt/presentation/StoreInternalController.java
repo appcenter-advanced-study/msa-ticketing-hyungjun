@@ -3,6 +3,7 @@ package com.appcenter.wnt.presentation;
 import com.appcenter.wnt.application.ReservationInfoService;
 import com.appcenter.wnt.application.StoreService;
 import com.appcenter.wnt.application.dto.response.StoreResponse;
+import com.appcenter.wnt.presentation.dto.BusinessHourInfo;
 import com.appcenter.wnt.presentation.dto.ReservationInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,5 +24,10 @@ public class StoreInternalController {
     @GetMapping("/reservation")
     public ReservationInfo getReservationInfo(@RequestParam("storeId") Long storeId, @RequestParam("menuItemId") Long menuItemId) {
         return reservationInfoService.findReservationInfo(storeId, menuItemId);
+    }
+
+    @GetMapping("/business-time/{storeId}")
+    public BusinessHourInfo getBusinessHour(@PathVariable("storeId") Long storeId) {
+        return storeService.getBusinessHourInfo(storeId);
     }
 }

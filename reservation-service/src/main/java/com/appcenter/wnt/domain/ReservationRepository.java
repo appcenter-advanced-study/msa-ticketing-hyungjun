@@ -1,5 +1,6 @@
 package com.appcenter.wnt.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,4 +9,5 @@ public interface ReservationRepository {
     Optional<Reservation> findById(Long id);
     void delete(Reservation Reservation);
     List<Reservation> findByUserId(Long userId);
+    List<Reservation> findByStoreIdAndReservationDate(Long storeId, LocalDate reservationDate);
 }

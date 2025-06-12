@@ -5,6 +5,7 @@ import com.appcenter.wnt.domain.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,5 +32,10 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     @Override
     public List<Reservation> findByUserId(Long userId) {
         return jpaRepository.findByUserInfo_UserId(userId);
+    }
+
+    @Override
+    public List<Reservation> findByStoreIdAndReservationDate(Long storeId, LocalDate reservationDate) {
+        return jpaRepository.findByStoreInfo_StoreIdAndReservationDate_ReservationDate(storeId, reservationDate);
     }
 }

@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -39,7 +41,7 @@ public class MenuItem {
             joinColumns = @JoinColumn(name = "menu_item_id")
     )
     @Column(name = "detail", nullable = false, length = 50)
-    private Set<String> details;
+    private List<String> details;
 
     @Embedded
     private MenuImage menuImage;
@@ -50,7 +52,7 @@ public class MenuItem {
         this.menuName = new MenuName(menuName);
         this.price = new Price(price);
         this.representative = representative;
-        this.details = details != null ? new HashSet<>(details) : new HashSet<>();
+        this.details = details != null ? new ArrayList<>(details) : new ArrayList<>();
         this.menuImage = menuImage;
     }
 

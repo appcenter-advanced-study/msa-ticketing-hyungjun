@@ -1,10 +1,13 @@
 package com.appcenter.wnt.application;
 
+import com.appcenter.wnt.application.dto.request.AvailableTimeRequest;
 import com.appcenter.wnt.application.dto.request.ReservationRequest;
+import com.appcenter.wnt.application.dto.response.AvailableTimeResponse;
 import com.appcenter.wnt.application.dto.response.ReservationResponse;
 import com.appcenter.wnt.domain.*;
 import com.appcenter.wnt.infrastructure.StoreServiceClient;
 import com.appcenter.wnt.infrastructure.UserServiceClient;
+import com.appcenter.wnt.infrastructure.dto.response.BusinessHourResponse;
 import com.appcenter.wnt.infrastructure.dto.response.ReservationInfoResponse;
 import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -34,7 +40,10 @@ public class ReservationService {
         log.info("storeId : {}", reservationInfo.storeId());
 
         // 사용자가 요청한 예약 시간
-        ReservationTime reservationTime = new ReservationTime(request.reservationTime().dayOfWeek(), request.reservationTime().reservationMinutes());
+        ReservationTime reservationTime = new ReservationTime(request.reservationTime().dayOfWeek(), request.reservationTime().reservationTime());
+
+        // 사용자가 요청한 예약 일자
+        ReservationDate reservationDate = new ReservationDate(request.reservationDate().reservationDate());
 
         // 사용자 정보
         UserInfo userInfo = new UserInfo(user.id(), user.nickname());
@@ -43,8 +52,31 @@ public class ReservationService {
         // 메뉴 정보
         MenuInfo menuInfo = new MenuInfo(reservationInfo.menuId(),reservationInfo.price(), reservationInfo.menuName());
 
-        Reservation reservation = reservationRepository.save(Reservation.of(userInfo,menuInfo,storeInfo, reservationTime));
+        Reservation reservation = reservationRepository.save(Reservation.of(userInfo,menuInfo,storeInfo, reservationTime,reservationDate));
 
         return ReservationResponse.from(reservation);
     }
+
+    public AvailableTimeResponse getAvailableTimes(AvailableTimeRequest request) {
+        BusinessHourResponse businessHourResponse = storeClient.getBusinessTime(request.storeId());
+        List<Reservation> reservations = reservationRepository.findByStoreIdAndReservationDate(request.storeId(), request.reservationDate());
+
+        List<LocalTime> businessTimes = businessHourResponse.businessTimes();
+        log.info("businessTimes : {}", businessTimes);
+        List<LocalTime> availableTimes = new ArrayList<>(businessTimes);
+
+        if(reservations.isEmpty()) {
+            return AvailableTimeResponse.of(businessTimes,availableTimes);
+        }
+
+
+        List<LocalTime> reservationTimes = reservations.stream().map(r -> r.getReservationTime().getReservationTime()).toList();
+
+        for(LocalTime reservationTime : reservationTimes) {
+            availableTimes.remove(reservationTime);
+        }
+
+        return AvailableTimeResponse.of(businessTimes, availableTimes);
+    }
+
 }

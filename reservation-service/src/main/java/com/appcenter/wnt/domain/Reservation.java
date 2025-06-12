@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "UK_reservation_store_menu_date_time",
-                        columnNames = {"store_id", "menu_id", "day_of_week","reservation_time"}
+                        columnNames = {"store_id", "day_of_week", "reservation_time", "reservation_date"}
                 )
 
 })
@@ -36,15 +36,19 @@ public class Reservation {
     @Embedded
     private ReservationTime reservationTime;
 
+    @Embedded
+    private ReservationDate reservationDate;
+
     @Builder
-    private Reservation(UserInfo userInfo, MenuInfo menuInfo, StoreInfo storeInfo, ReservationTime reservationTime) {
+    private Reservation(UserInfo userInfo, MenuInfo menuInfo, StoreInfo storeInfo, ReservationTime reservationTime, ReservationDate reservationDate) {
         this.userInfo = userInfo;
         this.menuInfo = menuInfo;
         this.storeInfo = storeInfo;
         this.reservationTime = reservationTime;
+        this.reservationDate = reservationDate;
     }
 
-    public static Reservation of(UserInfo userInfo, MenuInfo menuInfo, StoreInfo storeInfo, ReservationTime reservationTime) {
-        return Reservation.builder().userInfo(userInfo).menuInfo(menuInfo).storeInfo(storeInfo).reservationTime(reservationTime).build();
+    public static Reservation of(UserInfo userInfo, MenuInfo menuInfo, StoreInfo storeInfo, ReservationTime reservationTime, ReservationDate reservationDate) {
+        return Reservation.builder().userInfo(userInfo).menuInfo(menuInfo).storeInfo(storeInfo).reservationTime(reservationTime).reservationDate(reservationDate).build();
     }
 }

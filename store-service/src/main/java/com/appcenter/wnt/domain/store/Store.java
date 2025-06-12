@@ -36,7 +36,7 @@ public class Store {
 
     @ElementCollection
     @CollectionTable(name = "business_hours",joinColumns = @JoinColumn(name = "store_id"))
-    private Set<BusinessHour> businessHours;
+    private List<BusinessHour> businessHours;
 
     @Column(nullable = false)
     @Embedded
@@ -61,7 +61,7 @@ public class Store {
     private long reviewCount;
 
     @Builder
-    private Store(Long userId, String storeName, Address address, Set<BusinessHour> businessHours, ContactInfo contactInfo) {
+    private Store(Long userId, String storeName, Address address, List<BusinessHour> businessHours, ContactInfo contactInfo) {
         this.owner = new Owner(userId);
         this.storeName = new StoreName(storeName);
         this.address = address;
@@ -73,7 +73,7 @@ public class Store {
         this.reviewCount = 0;
     }
 
-    public static Store of(Long userId, String storeName, Address address, Set<BusinessHour> businessHours, ContactInfo contactInfo) {
+    public static Store of(Long userId, String storeName, Address address, List<BusinessHour> businessHours, ContactInfo contactInfo) {
         return Store.builder().userId(userId).storeName(storeName).address(address).businessHours(businessHours).contactInfo(contactInfo).build();
     }
 }

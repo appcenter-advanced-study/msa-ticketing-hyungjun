@@ -2,6 +2,7 @@ package com.appcenter.wnt.presentation;
 
 import com.appcenter.wnt.application.StoreImageService;
 import com.appcenter.wnt.application.dto.request.CreateStoreRequest;
+import com.appcenter.wnt.application.dto.response.StoreDetailPageResponse;
 import com.appcenter.wnt.application.dto.response.StoreResponse;
 import com.appcenter.wnt.application.StoreService;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,10 +42,10 @@ public class StoreController {
         storeImageService.storeImages(storeId, images);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("결과", "성공!"));
     }
-    // 가게 단건 조회
+    // 특정 가게 메인 페이지 조회
     @GetMapping("/{storeId}")
-    public ResponseEntity<StoreResponse> getStore(@PathVariable("storeId") Long storeId) {
-        StoreResponse response = storeService.findStore(storeId);
+    public ResponseEntity<StoreDetailPageResponse> getStoreDetails(@PathVariable("storeId") Long storeId) {
+        StoreDetailPageResponse response = storeService.getStoreDetails(storeId);
         return ResponseEntity.ok(response);
     }
 

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record CreateStoreRequest(
         @Schema(example = "1")
@@ -30,7 +29,7 @@ public record CreateStoreRequest(
                 address.toEntity(),
                 businessHours.stream()
                         .map(BusinessHourDto::toEntity)
-                        .collect(Collectors.toSet()),
+                        .toList(),
                 contactInfo.toEntity());
     }
 

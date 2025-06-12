@@ -7,8 +7,11 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public record ReservationRequest(
+        @Schema(example = "1")
         Long userId,
+        @Schema(example = "1")
         Long storeId,
+        @Schema(example = "1")
         Long menuId,
         ReservationTime reservationTime
 ) {

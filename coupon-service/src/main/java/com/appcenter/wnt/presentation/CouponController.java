@@ -1,9 +1,11 @@
 package com.appcenter.wnt.presentation;
 
+import com.appcenter.wnt.application.UserCouponService;
 import com.appcenter.wnt.application.dto.request.CreateCouponRequest;
-import com.appcenter.wnt.application.dto.response.CouponDetailResponse;
+import com.appcenter.wnt.application.dto.request.IssuedUserCouponRequest;
 import com.appcenter.wnt.application.dto.response.CouponResponse;
 import com.appcenter.wnt.application.CouponService;
+import com.appcenter.wnt.application.dto.response.UserCouponResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,25 +18,27 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CouponController {
     private final CouponService couponService;
+    private final UserCouponService userCouponService;
 
     // 쿠폰 생성
     @PostMapping
-    public ResponseEntity<CouponDetailResponse> createCoupon(@RequestBody CreateCouponRequest request) {
-        CouponDetailResponse response = couponService.createCoupon(request.couponType(), request.quantity());
+    public ResponseEntity<CouponResponse> createCoupon(@RequestBody CreateCouponRequest request) {
+        CouponResponse response = couponService.createCoupon(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // 쿠폰 조회
     @GetMapping("/{couponId}")
-    public ResponseEntity<CouponResponse> getCoupon(@PathVariable Long couponId) {
+    public ResponseEntity<CouponResponse> getCoupon(@PathVariable("couponId") Long couponId) {
         CouponResponse response = couponService.getCoupon(couponId);
         return ResponseEntity.ok(response);
     }
 
-    // 쿠폰 삭제
-    @DeleteMapping("/{couponId}")
-    public ResponseEntity<String> deleteCoupon(@PathVariable Long couponId) {
-        couponService.deleteCoupon(couponId);
-        return ResponseEntity.status(HttpStatus.OK).body("쿠폰 삭제 성공");
+    // 유저 쿠폰 발급
+    @PostMapping("/users")
+    public ResponseEntity<UserCouponResponse> IssuedUserCoupon(@RequestBody IssuedUserCouponRequest request) {
+        UserCouponResponse userCouponResponse = userCouponService.issueCoupon(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCouponResponse);
     }
+
 }

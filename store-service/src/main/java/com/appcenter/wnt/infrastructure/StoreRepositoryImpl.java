@@ -1,8 +1,7 @@
 package com.appcenter.wnt.infrastructure;
 
-import com.appcenter.wnt.domain.Store;
-import com.appcenter.wnt.domain.StoreName;
-import com.appcenter.wnt.domain.StoreRepository;
+import com.appcenter.wnt.domain.store.Store;
+import com.appcenter.wnt.domain.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

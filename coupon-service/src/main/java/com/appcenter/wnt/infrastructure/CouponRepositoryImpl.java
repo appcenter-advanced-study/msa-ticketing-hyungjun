@@ -2,7 +2,7 @@ package com.appcenter.wnt.infrastructure;
 
 import com.appcenter.wnt.domain.Coupon;
 import com.appcenter.wnt.domain.CouponRepository;
-import com.appcenter.wnt.domain.CouponType;
+import com.appcenter.wnt.domain.DiscountType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,11 +12,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CouponRepositoryImpl implements CouponRepository {
     private final CouponJpaRepository jpaRepository;
-
-    @Override
-    public Optional<Coupon> findByType(CouponType couponType) {
-        return jpaRepository.findByType(couponType);
-    }
 
     @Override
     public Coupon save(Coupon coupon) {

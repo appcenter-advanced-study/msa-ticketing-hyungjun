@@ -10,5 +10,6 @@ public class StoreApplication {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(StoreApplication.class);
         app.setAdditionalProfiles("stores");
-        app.run(args);    }
+        app.run(args);
+    }
 }

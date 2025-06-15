@@ -6,4 +6,5 @@ include 'nail-service'
 include 'coupon-service'
 include 'common'
 include 'reservation-service'
+include 'payment-service'
 

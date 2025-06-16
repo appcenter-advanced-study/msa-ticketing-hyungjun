@@ -10,6 +10,8 @@ import com.appcenter.wnt.infrastructure.UserServiceClient;
 import com.appcenter.wnt.infrastructure.dto.response.BusinessHourResponse;
 import com.appcenter.wnt.infrastructure.dto.response.ReservationInfoResponse;
 import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
+import com.appcenter.wnt.infrastructure.producer.PaymentEvent;
+import com.appcenter.wnt.infrastructure.producer.PaymentProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final StoreServiceClient storeClient;
     private final UserServiceClient userClient;
+    private final PaymentProducer producer;
 
     @Transactional
     public ReservationResponse reserve(ReservationRequest request) {
@@ -54,6 +57,8 @@ public class ReservationService {
 
         Reservation reservation = reservationRepository.save(Reservation.of(userInfo,menuInfo,storeInfo, reservationTime,reservationDate));
 
+        // 결제 이벤트 전송
+        producer.payment(new PaymentEvent(reservation.getId(),userInfo.getUserId(),storeInfo.getStoreName(),menuInfo.getMenuName(), menuInfo.getPrice()));
         return ReservationResponse.from(reservation);
     }
 

@@ -1,4 +1,4 @@
-package com.appcenter.wnt.config;
+package com.appcenter.wnt.infrastructure.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.LongSerializer;

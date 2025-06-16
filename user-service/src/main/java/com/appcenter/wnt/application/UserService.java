@@ -5,7 +5,7 @@ import com.appcenter.wnt.domain.User;
 import com.appcenter.wnt.application.dto.request.CreateUserRequest;
 import com.appcenter.wnt.application.dto.response.UserResponse;
 import com.appcenter.wnt.domain.UserRepository;
-import com.appcenter.wnt.producer.CouponCreateProducer;
+import com.appcenter.wnt.infrastructure.producer.CouponCreateProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package com.appcenter.wnt.application.dto;
 
-import com.appcenter.wnt.domain.Amount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

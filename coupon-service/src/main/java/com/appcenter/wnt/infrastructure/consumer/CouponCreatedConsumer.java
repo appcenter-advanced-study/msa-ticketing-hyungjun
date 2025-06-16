@@ -1,4 +1,4 @@
-package com.appcenter.wnt.consumer;
+package com.appcenter.wnt.infrastructure.consumer;
 
 import com.appcenter.wnt.domain.Coupon;
 import com.appcenter.wnt.domain.CouponRepository;

@@ -1,4 +1,4 @@
-package com.appcenter.wnt.domain;
+package com.appcenter.wnt.application.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

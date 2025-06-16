@@ -1,4 +1,4 @@
-package com.appcenter.wnt.domain;
+package com.appcenter.wnt.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

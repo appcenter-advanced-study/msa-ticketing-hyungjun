@@ -1,4 +1,4 @@
-package com.appcenter.wnt.producer;
+package com.appcenter.wnt.infrastructure.producer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

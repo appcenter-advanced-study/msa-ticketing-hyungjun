@@ -1,6 +1,6 @@
 package com.appcenter.wnt.presentation;
 
-import com.appcenter.wnt.application.KakaoPayService;
+import com.appcenter.wnt.infrastructure.KakaoPayService;
 import com.appcenter.wnt.application.dto.KakaoApproveResponse;
 import com.appcenter.wnt.application.dto.KakaoReadyResponse;
 import com.appcenter.wnt.application.dto.PaymentRequest;

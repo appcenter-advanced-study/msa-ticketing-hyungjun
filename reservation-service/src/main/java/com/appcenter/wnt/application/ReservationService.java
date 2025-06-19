@@ -10,7 +10,7 @@ import com.appcenter.wnt.infrastructure.UserServiceClient;
 import com.appcenter.wnt.infrastructure.dto.response.BusinessHourResponse;
 import com.appcenter.wnt.infrastructure.dto.response.ReservationInfoResponse;
 import com.appcenter.wnt.infrastructure.dto.response.UserResponse;
-import com.appcenter.wnt.infrastructure.producer.PaymentEvent;
+import com.appcenter.wnt.infrastructure.event.PaymentEvent;
 import com.appcenter.wnt.infrastructure.producer.PaymentProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

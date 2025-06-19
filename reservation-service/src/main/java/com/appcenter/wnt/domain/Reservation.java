@@ -39,6 +39,9 @@ public class Reservation {
     @Embedded
     private ReservationDate reservationDate;
 
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus reservationStatus;
+
     @Builder
     private Reservation(UserInfo userInfo, MenuInfo menuInfo, StoreInfo storeInfo, ReservationTime reservationTime, ReservationDate reservationDate) {
         this.userInfo = userInfo;
@@ -46,9 +49,18 @@ public class Reservation {
         this.storeInfo = storeInfo;
         this.reservationTime = reservationTime;
         this.reservationDate = reservationDate;
+        this.reservationStatus = ReservationStatus.PENDING;
     }
 
     public static Reservation of(UserInfo userInfo, MenuInfo menuInfo, StoreInfo storeInfo, ReservationTime reservationTime, ReservationDate reservationDate) {
         return Reservation.builder().userInfo(userInfo).menuInfo(menuInfo).storeInfo(storeInfo).reservationTime(reservationTime).reservationDate(reservationDate).build();
+    }
+
+    public void approve() {
+        this.reservationStatus = ReservationStatus.APPROVE;
+    }
+
+    public void cancel(){
+        this.reservationStatus = ReservationStatus.CANCEL;
     }
 }

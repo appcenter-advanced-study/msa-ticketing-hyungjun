@@ -1,4 +1,4 @@
-package com.appcenter.wnt.application;
+package com.appcenter.wnt.infrastructure;
 
 import com.appcenter.wnt.application.dto.KakaoApproveResponse;
 import com.appcenter.wnt.application.dto.KakaoReadyResponse;
@@ -7,12 +7,14 @@ import com.appcenter.wnt.application.properties.KakoPayProperties;
 import com.appcenter.wnt.domain.Payment;
 import com.appcenter.wnt.domain.PaymentApproveInfo;
 import com.appcenter.wnt.domain.PaymentRepository;
+import com.appcenter.wnt.infrastructure.producer.ReservationStatusProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
@@ -29,6 +31,9 @@ public class KakaoPayService {
     private final KakoPayProperties kakoPayProperties;
     private final RestTemplate restTemplate = new RestTemplate();
     private final PaymentRepository paymentRepository;
+    private final ReservationStatusProducer producer;
+
+
     private KakaoReadyResponse kakaoReadyResponse;
 
     private HttpHeaders getHeader(){
@@ -84,19 +89,27 @@ public class KakaoPayService {
         // 헤더
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(params, this.getHeader());
 
-        // 외부에 보낼 url
-        KakaoApproveResponse approveResponse = restTemplate.postForObject(
-                "https://open-api.kakaopay.com/online/v1/payment/approve",
-                requestEntity,
-                KakaoApproveResponse.class);
+        try{
+            // 외부에 보낼 url
+            KakaoApproveResponse approveResponse = restTemplate.postForObject(
+                    "https://open-api.kakaopay.com/online/v1/payment/approve",
+                    requestEntity,
+                    KakaoApproveResponse.class);
 
-        String tid = approveResponse.getTid();
-        String paymentMethodType = approveResponse.getPayment_method_type();
-        LocalDateTime approvedAt = LocalDateTime.parse(approveResponse.getApproved_at());
-        int totalAmount = approveResponse.getAmount().getTotal();
+            String tid = approveResponse.getTid();
+            String paymentMethodType = approveResponse.getPayment_method_type();
+            LocalDateTime approvedAt = LocalDateTime.parse(approveResponse.getApproved_at());
+            int totalAmount = approveResponse.getAmount().getTotal();
 
-        payment.approve(new PaymentApproveInfo(tid,paymentMethodType,approvedAt,totalAmount));
+            payment.approve(new PaymentApproveInfo(tid,paymentMethodType,approvedAt,totalAmount));
+            producer.approveReservation(reservationId,true);
 
-        return approveResponse;
+            return approveResponse;
+        }catch (RestClientException e){
+            log.error("카카오페이 승인 실패 : {}", e.getMessage());
+            payment.fail();
+            producer.cancelReservation(reservationId,false);
+            throw new RuntimeException("결제 승인 실패로 예약이 취소되었습니다.");
+        }
     }
 }

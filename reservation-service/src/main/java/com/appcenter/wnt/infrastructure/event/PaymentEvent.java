@@ -1,4 +1,4 @@
-package com.appcenter.wnt.infrastructure.producer;
+package com.appcenter.wnt.infrastructure.event;
 
 public record PaymentEvent(
         Long reservationId,

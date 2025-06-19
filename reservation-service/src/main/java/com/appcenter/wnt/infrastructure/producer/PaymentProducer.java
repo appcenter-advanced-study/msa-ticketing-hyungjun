@@ -1,5 +1,6 @@
 package com.appcenter.wnt.infrastructure.producer;
 
+import com.appcenter.wnt.infrastructure.event.PaymentEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

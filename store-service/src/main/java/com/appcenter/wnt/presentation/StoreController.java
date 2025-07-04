@@ -42,19 +42,20 @@ public class StoreController {
         storeImageService.storeImages(storeId, images);
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("결과", "성공!"));
     }
-    // 특정 가게 메인 페이지 조회
-    @GetMapping("/{storeId}")
-    public ResponseEntity<StoreDetailPageResponse> getStoreDetails(@PathVariable("storeId") Long storeId) {
-        StoreDetailPageResponse response = storeService.getStoreDetails(storeId);
-        return ResponseEntity.ok(response);
-    }
 
-    // 가게 전체 목록 조회
-    @GetMapping
-    public ResponseEntity<List<StoreResponse>> getAllStores() {
-        List<StoreResponse> response = storeService.findAllStore();
-        return ResponseEntity.ok(response);
-    }
+//    // 특정 가게 메인 페이지 조회
+//    @GetMapping("/{storeId}")
+//    public ResponseEntity<StoreDetailPageResponse> getStoreDetails(@PathVariable("storeId") Long storeId) {
+//        StoreDetailPageResponse response = storeService.getStoreDetails(storeId);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    // 가게 전체 목록 조회
+//    @GetMapping
+//    public ResponseEntity<List<StoreResponse>> getAllStores() {
+//        List<StoreResponse> response = storeService.findAllStore();
+//        return ResponseEntity.ok(response);
+//    }
 
     // 가게 삭제
     @DeleteMapping("/{storeId}")

@@ -5,6 +5,7 @@ import com.appcenter.wnt.application.StoreService;
 import com.appcenter.wnt.application.dto.response.StoreResponse;
 import com.appcenter.wnt.presentation.dto.BusinessHourInfo;
 import com.appcenter.wnt.presentation.dto.ReservationInfo;
+import com.appcenter.wnt.query.application.StoreQueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class StoreInternalController {
     private final StoreService storeService;
+    private final StoreQueryService storeQueryService;
     private final ReservationInfoService reservationInfoService;
 
     // 가게 조회(내부 조회)
     @GetMapping("/{storeId}")
     public StoreResponse getInternalStore(@PathVariable("storeId") Long storeId) {
-        return storeService.findStore(storeId);
+        return storeQueryService.findStore(storeId);
     }
 
     @GetMapping("/reservation")

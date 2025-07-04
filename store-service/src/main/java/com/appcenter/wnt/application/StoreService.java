@@ -38,27 +38,27 @@ public class StoreService {
         return StoreResponse.from(store);
     }
 
-    public StoreDetailPageResponse getStoreDetails(Long storeId){
-        Store store = storeRepository.findById(storeId).orElseThrow(()-> new RuntimeException("가게가 존재하지 않습니다."));
-        // 영업 날짜 별 영업 종료 시간 구하기
-        DayOfWeek dayOfWeek = DayOfWeek.of(Calendar.DAY_OF_WEEK);
-
-        Optional<BusinessHour> businessHour = store.getBusinessHours().stream().filter(bh -> dayOfWeek.equals(bh.getDayOfWeek())).findFirst();
-        if(businessHour.isEmpty()){
-            throw new RuntimeException("날짜가 맞지 않습니다. 날짜를 등록해주세요");
-        }
-
-        return StoreDetailPageResponse.from(store, businessHour.get().getEndTime());
-    }
-
-    public StoreResponse findStore(Long storeId) {
-        Store store = storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("가게가 존재하지 않습니다."));
-        return StoreResponse.from(store);
-    }
-
-    public List<StoreResponse> findAllStore() {
-        return storeRepository.findAll().stream().map(StoreResponse::from).collect(Collectors.toList());
-    }
+//    public StoreDetailPageResponse getStoreDetails(Long storeId){
+//        Store store = storeRepository.findById(storeId).orElseThrow(()-> new RuntimeException("가게가 존재하지 않습니다."));
+//        // 영업 날짜 별 영업 종료 시간 구하기
+//        DayOfWeek dayOfWeek = DayOfWeek.of(Calendar.DAY_OF_WEEK);
+//
+//        Optional<BusinessHour> businessHour = store.getBusinessHours().stream().filter(bh -> dayOfWeek.equals(bh.getDayOfWeek())).findFirst();
+//        if(businessHour.isEmpty()){
+//            throw new RuntimeException("날짜가 맞지 않습니다. 날짜를 등록해주세요");
+//        }
+//
+//        return StoreDetailPageResponse.from(store, businessHour.get().getEndTime());
+//    }
+//
+//    public StoreResponse findStore(Long storeId) {
+//        Store store = storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("가게가 존재하지 않습니다."));
+//        return StoreResponse.from(store);
+//    }
+//
+//    public List<StoreResponse> findAllStore() {
+//        return storeRepository.findAll().stream().map(StoreResponse::from).collect(Collectors.toList());
+//    }
 
     @Transactional
     public void deleteStore(Long storeId){
